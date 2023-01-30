@@ -1,4 +1,4 @@
-const crudSche=require("mongoose")
+const crudSche=require("")
 
 
 

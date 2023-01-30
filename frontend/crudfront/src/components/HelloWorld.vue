@@ -1,5 +1,5 @@
 <template>
- <h1>CRU SYSTEM</h1>
+ <h1>CRUD SYSTEM</h1>
 </template>
 
 <script>

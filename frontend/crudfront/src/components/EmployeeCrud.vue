@@ -4,18 +4,18 @@
 <form @submit.prevent="save">
   <div class="form-group">
     <label>Employee name</label>
-    <input type="text" v-model="employee.name" class="form-control"  placeholder="Employee name">
+    <input type="text" v-model="employee.name" name="name"  class="form-control"  placeholder="Employee name">
   
   </div>
   <div class="form-group">
     <label>Employee Address</label>
-    <input type="text" v-model="employee.address" class="form-control"  placeholder="Employee Address">
+    <input type="text" v-model="employee.address" name="address"  class="form-control"  placeholder="Employee Address">
   
   </div>
  
   <div class="form-group">
     <label>Mobile</label>
-    <input type="text" v-model="employee.phone" class="form-control"  placeholder="Mobile">
+    <input type="text" v-model="employee.phone" name="phone"  class="form-control"  placeholder="Mobile">
   
   </div>
  
@@ -54,10 +54,10 @@
   </template>
   
   <script>
-    import Vue from 'vue';
+   
     import axios from 'axios';
  
-     Vue.use(axios)
+   
  
  
   export default {
@@ -66,7 +66,7 @@
       return {
         result: {},
         employee:{
-                   _id: '',
+                   
                    name: '',
                    address: '',
                    phone: ''
@@ -86,7 +86,7 @@
     methods: {
            EmployeeLoad()
            {
-                 var page = "http://localhost:8000/user/getAll";
+                 var page = "http://localhost:4504/user/getAll";
                  axios.get(page)
                   .then(
                       ({data})=>{
@@ -103,7 +103,7 @@
  
            save()
            {
-            if(this.employee._id == '')
+            if(this.employee)
               {
                 this.saveData();
               }
@@ -115,10 +115,12 @@
            },
            saveData()
            {
-            axios.post("http://localhost:8000/user/create", this.employee)
+            console.log("data to be saved",this.employee)
+
+            axios.post("http://localhost:4504/user/create", this.employee)
             .then(
               ({data})=>{
-                alert("saveddddd");
+                alert(`saveddddd ${data}`);
                 this.EmployeeLoad();
               }
             )
@@ -131,7 +133,7 @@
            },
            updateData()
            {
-              var editrecords = 'http://localhost:8000/user/update/'+ this.employee._id;
+              var editrecords = 'http://localhost:4504/user/update/'+ this.employee._id;
               axios.patch(editrecords, this.employee)
               .then(
                 ({data})=>{
@@ -139,7 +141,7 @@
                   this.employee.address = '',
                   this.employee.phone = ''
                   this.id = ''
-                  alert("Updated!!!");
+                  alert(`updated!!! ${data}`);
                   this.EmployeeLoad();
                 }
               );
@@ -147,7 +149,7 @@
            },
  
            remove(employee){
-             var url = `http://localhost:8000/user/delete/${employee._id}`;
+             var url = `http://localhost:4504/user/delete/${employee._id}`;
               axios.delete(url);
               alert("Deleteddd");
               this.EmployeeLoad();

@@ -1,10 +1,15 @@
 const express=require('express')
 const mongoose=require('mongoose')
 const bodyParser = require('body-parser')
-
-var app = express()
+const route = require('./Router/route')
+var app = express();
+const cors = require('cors');
+const logs = require('morgan');
 const port = process.env.express ||4504
-const url = "mongodb://localhost:27017/Crud"
+const url = ""
+
+
+    mongoose.set('strictQuery',false);
 mongoose.connect(url).then((res)=>{
     try{
         if(res){
@@ -14,8 +19,12 @@ mongoose.connect(url).then((res)=>{
         console.log(err)
     }
 })
-app.use(bodyParser.urlencoded({extended:false}))
+
+app.use(cors());
+app.use(logs('dev'));
+// app.use(bodyParser.urlencoded({extended:false}))
 app.use(express.json())
+app.use('',route)
 app.listen(port,()=>{
     console.log("my server is running ",port)
 })

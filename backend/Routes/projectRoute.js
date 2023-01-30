@@ -10,7 +10,7 @@ const crudController = require("../Controllers/Category/crudUpdate");
 
 
 //crud Router
-router.post("", );
+router.post("/", );
 router.get("/", );
 router.patch("/", );
 router.delete("/",);
